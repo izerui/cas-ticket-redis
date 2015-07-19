@@ -46,7 +46,7 @@
 	**RedisTicketRegistry.java**
 
 		package org.jasig.cas.ticket.registry;
-
+		
 		import org.jasig.cas.ticket.Ticket;
 		import org.springframework.util.Assert;
 		
@@ -106,12 +106,18 @@
 		        Set<Ticket> tickets = new HashSet<Ticket>();
 		        Set<String> keys = redisTemplate.keys(TICKET_PREFIX + "*");
 		        for (String key:keys){
-		            tickets.add(redisTemplate.boundValueOps(TICKET_PREFIX+key).get());
+		            Ticket ticket = redisTemplate.boundValueOps(TICKET_PREFIX+key).get();
+		            if(ticket==null){
+		                redisTemplate.delete(TICKET_PREFIX+key);
+		            }else{
+		                tickets.add(ticket);
+		            }
 		        }
 		        return tickets;
 		    }
 		
 		}
+
 
 	**TicketRedisTemplate.java**
 
