@@ -9,7 +9,7 @@
 
 ### 前提：
 	这里只讲解如何实现cas ticket的共享，关于session的共享请移步：
-	https://github.com/izerui/tomcat-redis-session-manager
+	<a href='https://github.com/izerui/tomcat-redis-session-manager'>https://github.com/izerui/tomcat-redis-session-manager</a>
 
 ### 实现步骤：
 
