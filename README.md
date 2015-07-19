@@ -154,5 +154,5 @@
 
 * 重新编译 mvn install 
 
-		 生成的cas.war 即可以部署到多个容器中实现负载均衡了，最好配置下容器的session共享
+		 生成的cas.war 即可以部署到多个容器中实现集群，最好配置下容器的session共享
 		 参考： https://github.com/izerui/tomcat-redis-session-manager
