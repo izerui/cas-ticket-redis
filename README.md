@@ -1,12 +1,22 @@
 # 实现cas ticket基于redis的集群
 
+### 目的
+	克服cas单点故障，将cas认证请求分发到多台cas服务器上，降低负载。
 
 ### 实现思路：
-     将cas中的ticket票据存放到 redis缓存中，实现多个cas节点获取ticket的时候从一个地方获取。
+	采用统一的ticket存取策略，所有ticket的操作都从中央缓存redis中存取。
+	采用session共享，session的存取都从中央缓存redis中存取。
+
+### 前提：
+	这里只讲解如何实现cas ticket的共享，关于session的共享请移步：
+	https://github.com/izerui/tomcat-redis-session-manager
 
 ### 实现步骤：
 
-* 添加依赖  **cas-server-core**模块的 pom.xml
+
+
+1. 添加依赖到  **cas-server-core**模块的 pom.xml
+
 
 		<!-- redis -->
         <dependency>
@@ -25,7 +35,9 @@
             <version>2.6.2</version>
         </dependency>
 
-* 添加类  **cas-server-core**模块 org.jasig.cas.ticket.registry 包下
+
+
+2. 添加类到 **cas-server-core**模块的 org.jasig.cas.ticket.registry 包下
 
 	**RedisTicketRegistry.java**
 
@@ -131,7 +143,9 @@
 
 
 
-* 修改 spring配置文件 **cas-server-webapp** 模块 WEB-INF\spring-configuration\ticketRegistry.xml
+
+
+3. 修改 spring配置文件 **cas-server-webapp** 模块 WEB-INF\spring-configuration\ticketRegistry.xml
 
 		
 		<bean id="ticketRegistry" class="org.jasig.cas.ticket.registry.DefaultTicketRegistry" />
@@ -152,7 +166,8 @@
 	注意： 里面的 jedisConnFactory链接信息 修改为自己的连接串，这里选择database 1为存放cas票据的数据库
 
 
-* 重新编译 mvn install 
 
-		 生成的cas.war 即可以部署到多个容器中实现集群，最好配置下容器的session共享
-		 参考： https://github.com/izerui/tomcat-redis-session-manager
+
+4. 重新编译 mvn install 
+
+		 生成的cas.war 部署到多个已经做过session共享的tomcat容器中。
