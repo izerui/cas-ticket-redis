@@ -166,8 +166,8 @@
           p:redisTemplate-ref="redisTemplate"/>
 
 	    <bean id="jedisConnFactory"	class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-	          p:hostName="182.92.4.161"
-	          p:database="1"
+	          p:hostName="192.168.1.89"
+	          p:database="0"
 	          p:usePool="true"/>
 	
 	    <bean id="redisTemplate" class="org.jasig.cas.ticket.registry.TicketRedisTemplate"
