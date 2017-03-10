@@ -5,7 +5,6 @@
 
 ### 实现思路：
 	采用统一的ticket存取策略，所有ticket的操作都从中央缓存redis中存取。
-	采用session共享，session的存取都从中央缓存redis中存取。
 
 ### 前提：
 	这里只讲解如何实现cas ticket的共享，关于session的共享请移步：
